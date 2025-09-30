@@ -1,0 +1,22 @@
+---
+title: "p8105_hw2_xf2302"
+output: github_document
+date: "2025-09-30"
+---
+# Problem 1
+```{r}
+library(tidyverse)
+```
+# Clean pols-month.csv dataset
+```{r}
+pols <- 
+  read_csv("data/pols-month.csv") |> 
+  separate(mon, into = c("year", "month", "day"), sep = "-") |> 
+  mutate(
+    year = as.integer(year),
+    month = as.integer(month),
+    month = month.name[month],
+    president = if_else(prez_gop == 1, "gop", "dem")
+  ) |> 
+  select(-day, -prez_gop, -prez_dem)
+```

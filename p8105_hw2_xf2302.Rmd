@@ -179,7 +179,28 @@ n_neighborhood <- n_distinct(zori_final$neighborhood)
 ```{r}
 missing_zips <- setdiff(zips_unique$zip_code, zori$region_name)
 ```
-
+# Compare 2020 vs 2021
+```{r}
+zori_compare <- zori_final %>%
+  filter(month %in% as.Date(c("2020-01-31", "2021-01-31"))) %>%
+  select(region_name, county, neighborhood, month, rent_index) %>%  
+  pivot_wider(
+    names_from = month,
+    values_from = rent_index,
+    names_prefix = "rent_"
+  ) %>%
+  mutate(drop = `rent_2021-01-31` - `rent_2020-01-31`) %>%  
+  arrange(drop) %>%
+  slice_head(n = 10)
+```
+# Output results
+```{r}
+n_obs
+n_zip
+n_neighborhood
+missing_zips
+zori_compare
+```
 
 
 

@@ -74,3 +74,39 @@ Key variables include the counts of politicians by party, the sitting presidentâ
 and the S&P 500 closing values. Note that missing values occur where data are not available 
 (e.g., stock market values before `r min(snp$year)`, unemployment data in `r min(unemployment$year)-1`).
 
+# Problem 2
+```{r}
+library(readxl)
+library(dplyr)
+library(janitor)
+```
+
+# Define a Cleaning Function
+```{r}
+clean_trash <- function(sheet_name, wheel_name) {
+  df <- read_excel(
+    "data/202509 Trash Wheel Collection Data.xlsx",
+    sheet = sheet_name,
+    skip = 1
+  ) |>
+    clean_names() |> 
+    filter(!is.na(dumpster)) |>          
+    select(-starts_with("...")) |> 
+    mutate(
+      year = as.integer(year)   
+    )
+  
+  if ("sports_balls" %in% colnames(df)) {
+    df <- df |>
+      mutate(sports_balls = as.integer(round(sports_balls, 0)))
+  } else {
+    df <- df |>
+      mutate(sports_balls = NA_integer_)
+  }
+  df |>
+    mutate(wheel = wheel_name)
+}
+```
+
+
+

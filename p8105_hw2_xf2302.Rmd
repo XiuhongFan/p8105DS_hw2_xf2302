@@ -20,3 +20,17 @@ pols <-
   ) |> 
   select(-day, -prez_gop, -prez_dem)
 ```
+# 2. Clean snp.csv dataset
+```{r}
+snp <- 
+  read_csv("data/snp.csv") |> 
+  separate(date, into = c("month", "day", "year"), sep = "/") |> 
+  mutate(
+    month = as.integer(month),
+    year = as.integer(year),
+    year = if_else(year > 50, 1900 + year, 2000 + year),
+    month = month.name[month]
+  ) |> 
+  select(year, month, close) |> 
+  arrange(year, month)
+```

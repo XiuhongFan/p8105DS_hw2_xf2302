@@ -146,7 +146,19 @@ zips <- read_csv("data/Zip Codes.csv") %>%
 zori <- read_csv("data/Zip_zori_uc_sfrcondomfr_sm_month_NYC.csv") %>% 
   clean_names()
 ```
-
+# Tidy ZORI data
+```{r}
+zori_tidy <- zori %>% 
+  pivot_longer(
+    cols = starts_with("x"),       
+    names_to = "month",
+    values_to = "rent_index"
+  ) %>% 
+  mutate(
+    month = gsub("^x", "", month),                 
+    month = as.Date(month, format = "%Y_%m_%d")    
+  )
+```
 
 
 

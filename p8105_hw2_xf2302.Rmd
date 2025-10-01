@@ -107,6 +107,13 @@ clean_trash <- function(sheet_name, wheel_name) {
     mutate(wheel = wheel_name)
 }
 ```
+# Clean Each Trash Wheel Dataset and combine Datasets
+```{r}
+mr_trash   <- clean_trash("Mr. Trash Wheel", "Mr. Trash Wheel")
+prof_trash <- clean_trash("Professor Trash Wheel", "Professor Trash Wheel")
+gwynnda    <- clean_trash("Gwynns Falls Trash Wheel", "Gwynnda")
+all_trash <- bind_rows(mr_trash, prof_trash, gwynnda)
+```
 
 
 

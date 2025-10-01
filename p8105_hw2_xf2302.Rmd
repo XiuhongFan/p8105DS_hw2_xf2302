@@ -159,7 +159,10 @@ zori_tidy <- zori %>%
     month = as.Date(month, format = "%Y_%m_%d")    
   )
 ```
-
+# Deduplicate ZIPs
+```{r}
+zips_unique <- zips %>% distinct(zip_code, .keep_all = TRUE)
+```
 
 
 

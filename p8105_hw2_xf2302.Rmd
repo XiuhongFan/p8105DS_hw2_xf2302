@@ -133,10 +133,12 @@ In June 2022, Gwynnda collected `r format(gwynnda_cig_2022_06, big.mark = ",")` 
 Key variables include dumpster ID, collection date, total weight (in tons), counts of plastic bottles, polystyrene, cigarette butts, and sports balls.  
 
 # Problem 3
+```{r}
 library(readr)
 library(dplyr)
 library(tidyr)
 library(janitor)
+```
 
 # Load and clean Zip Codes and ZORI data
 ```{r}

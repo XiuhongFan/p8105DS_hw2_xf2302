@@ -132,3 +132,25 @@ Professor Trash Wheel collected a total of `r round(prof_total_weight, 2)` tons 
 In June 2022, Gwynnda collected `r format(gwynnda_cig_2022_06, big.mark = ",")` cigarette butts.
 Key variables include dumpster ID, collection date, total weight (in tons), counts of plastic bottles, polystyrene, cigarette butts, and sports balls.  
 
+# Problem 3
+library(readr)
+library(dplyr)
+library(tidyr)
+library(janitor)
+
+# Load and clean Zip Codes and ZORI data
+```{r}
+zips <- read_csv("data/Zip Codes.csv") %>% 
+  clean_names()
+
+zori <- read_csv("data/Zip_zori_uc_sfrcondomfr_sm_month_NYC.csv") %>% 
+  clean_names()
+```
+
+
+
+
+
+
+
+

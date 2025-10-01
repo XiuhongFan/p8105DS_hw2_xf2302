@@ -114,6 +114,21 @@ prof_trash <- clean_trash("Professor Trash Wheel", "Professor Trash Wheel")
 gwynnda    <- clean_trash("Gwynns Falls Trash Wheel", "Gwynnda")
 all_trash <- bind_rows(mr_trash, prof_trash, gwynnda)
 ```
+# Compute Results
+```{r}
+n_obs <- nrow(all_trash)
+prof_total_weight <- sum(prof_trash$weight_tons, na.rm = TRUE)
+gwynnda_cig_2022_06 <- gwynnda |>
+  filter(year == 2022, month == "June") |>
+  summarise(total_cig = sum(cigarette_butts, na.rm = TRUE)) |>
+  pull(total_cig)
+n_obs
+prof_total_weight
+gwynnda_cig_2022_06
+```
 
-
+The combined Trash Wheel dataset contains `r n_obs` observations.  
+Professor Trash Wheel collected a total of `r round(prof_total_weight, 2)` tons of trash.  
+In June 2022, Gwynnda collected `r format(gwynnda_cig_2022_06, big.mark = ",")` cigarette butts.
+Key variables include dumpster ID, collection date, total weight (in tons), counts of plastic bottles, polystyrene, cigarette butts, and sports balls.  
 

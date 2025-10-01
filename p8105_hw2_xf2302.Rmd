@@ -28,7 +28,9 @@ snp <-
   mutate(
     month = as.integer(month),
     year = as.integer(year),
-    year = if_else(year > 50, 1900 + year, 2000 + year),
+    year = if_else(year < 100,            
+                   if_else(year >= 50, 1900 + year, 2000 + year),
+                   year),
     month = month.name[month]
   ) |> 
   select(year, month, close) |> 
@@ -49,3 +51,26 @@ unemployment <-
   ) |> 
   select(year, month, unemployment)
 ```
+# 4. Merge datasets and inspect merged dataset
+```{r}
+merged_data <- 
+  pols |> 
+  left_join(snp, by = c("year", "month")) |> 
+  left_join(unemployment, by = c("year", "month"))
+dim(merged_data)        
+range(merged_data$year) 
+head(merged_data)       
+```
+The **FiveThirtyEight datasets** combine information on U.S. politics, the stock market, and unemployment. 
+The `pols-month.csv` dataset contains monthly counts of national politicians (governors, senators, and representatives) 
+by political party, from `r min(pols$year)` to `r max(pols$year)`. 
+
+The `snp.csv` dataset records monthly closing values of the S&P 500 index, ranging from `r min(snp$year)` to `r max(snp$year)`. 
+The `unemployment.csv` dataset provides national unemployment rates, reported monthly from `r min(unemployment$year)` to `r max(unemployment$year)`.  
+
+After cleaning and merging these datasets by year and month, the resulting dataset has **`r nrow(merged_data)` rows** 
+and **`r ncol(merged_data)` variables**, covering the period **`r min(merged_data$year)`–`r max(merged_data$year)`**. 
+Key variables include the counts of politicians by party, the sitting president’s party, monthly unemployment rates, 
+and the S&P 500 closing values. Note that missing values occur where data are not available 
+(e.g., stock market values before `r min(snp$year)`, unemployment data in `r min(unemployment$year)-1`).
+

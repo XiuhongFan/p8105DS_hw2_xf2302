@@ -34,3 +34,18 @@ snp <-
   select(year, month, close) |> 
   arrange(year, month)
 ```
+# 3. Clean unemployment.csv
+```{r}
+unemployment <- 
+  read_csv("data/unemployment.csv") |> 
+  pivot_longer(
+    Jan:Dec,
+    names_to = "month",
+    values_to = "unemployment"
+  ) |> 
+  mutate(
+    year = as.integer(Year),
+    month = month.name[match(month, month.abb)]
+  ) |> 
+  select(year, month, unemployment)
+```
